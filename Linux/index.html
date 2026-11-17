@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="author" content="Kiln GNU/Linux"><meta name="theme-color" content="#191917">
+  <meta name="description" content="Kiln GNU/Linux is a Debian 13-based distribution with Glaze, its own Rust desktop environment. Explore the early beta and its source code.">
+  <meta property="og:type" content="website"><meta property="og:title" content="Kiln GNU/Linux — Made with Glaze"><meta property="og:description" content="A Debian 13-based Linux distribution with its own desktop environment, Glaze. Early beta."><meta property="og:url" content="https://kiln.mandrusia.tech/Linux/"><meta property="og:image" content="https://kiln.mandrusia.tech/Linux/assets/desktop.webp">
+  <link rel="canonical" href="https://kiln.mandrusia.tech/Linux/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="site.webmanifest">
+  <title>Kiln GNU/Linux — Made with Glaze</title>
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root{color-scheme:dark;--bg:#191917;--panel:#252422;--panel2:#2f2d29;--line:#45413c;--ink:#faf9f5;--dim:#b5afa8;--muted:#89837d;--accent:#d97757;--accent-hover:#ec906f;--soft:#efe8dc;--radius:13px}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:90px}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    body::before{content:"";position:absolute;pointer-events:none;inset:0 0 auto;height:980px;z-index:-1;background:radial-gradient(ellipse 48% 50% at 88% 32%,#382820 0%,transparent 95%)}
+    a{color:inherit}button{font:inherit}
+    ::selection{background:var(--accent);color:#211d1b}
+    :where(a,button):focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+    .container{width:min(1280px,calc(100% - 112px));margin-inline:auto}
+    .skip{position:absolute;left:20px;top:-100px;z-index:10;background:var(--accent);color:#211d1b;padding:12px 18px}.skip:focus{top:12px}
+    .header{position:sticky;top:0;z-index:20;background:rgb(25 25 23 /.89);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid #ffffff14;transition:box-shadow .25s,border-color .25s}
+    .header.scrolled{box-shadow:0 8px 20px #0004;border-color:#ffffff24}
+    .header-inner{min-height:91px;display:flex;justify-content:space-between;align-items:center;gap:24px;transition:min-height .3s}
+    .header.scrolled .header-inner{min-height:72px}
+    .logo{display:flex;align-items:center}.logo img{width:186px;height:auto;display:block}
+    .nav{display:flex;align-items:center;gap:36px}
+    .nav a{font-size:14px;text-decoration:none;color:var(--dim);transition:color .2s}
+    .nav a:hover{color:var(--ink)}
+    .nav .nav-source{color:var(--accent);font-weight:600}
+    .hero{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:clamp(30px,4.2vw,76px);min-height:650px;padding-block:106px 112px}
+    .hero-info{position:relative;z-index:2}
+    .overline{display:inline-flex;align-items:center;gap:11px;color:#d6cec4;font-size:15px;font-weight:550}
+    .overline .dot{width:8px;height:8px;background:var(--accent);border-radius:50%}
+    h1{font-size:clamp(65px,7.5vw,116px);letter-spacing:-.075em;line-height:.99;margin:25px 0 25px;font-weight:680}
+    h1 em{font-style:normal;color:var(--accent)}
+    .lede{font-size:clamp(17px,1.55vw,21px);line-height:1.63;color:var(--dim);max-width:475px;margin:0}
+    .actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:37px}
+    .btn{display:inline-flex;justify-content:center;align-items:center;gap:20px;background:var(--accent);color:#171714;text-decoration:none;border:1px solid var(--accent);font-weight:700;font-size:15px;min-height:53px;padding:0 20px;border-radius:7px;transition:background .24s,transform .34s cubic-bezier(.16,1,.3,1),box-shadow .24s}
+    .btn svg{height:18px;width:18px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .22s}
+    .btn:hover{background:var(--accent-hover);transform:translateY(-3px);box-shadow:0 10px 28px #0005}.btn:hover svg{transform:translateX(4px)}
+    .text-link{font-size:15px;font-weight:580;text-underline-offset:6px;color:var(--ink);transition:color .2s}.text-link:hover{color:var(--accent)}
+    .hero-visual{position:relative;min-width:0;transform:translateZ(0)}
+    .hero-visual::before{content:"";position:absolute;border-radius:50%;background:var(--accent);width:68%;aspect-ratio:1;right:-6%;top:-13%;opacity:.18;filter:blur(70px);z-index:-1}
+    .window{border-radius:15px;overflow:hidden;background:#161616;border:1px solid #5b4a41;box-shadow:0 20px 80px #0008,0 0 0 7px #ffffff06;transition:transform .75s cubic-bezier(.16,1,.3,1),box-shadow .5s}
+    .hero-visual:hover .window{transform:translateY(-8px) rotate(-.4deg);box-shadow:0 26px 98px #000a,0 0 0 7px #ffffff08}
+    .window img{display:block;width:100%;height:auto}
+    .window-caption{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;margin-top:18px}
+    .faint-line{border:0;border-top:1px solid var(--line);margin:0}
+    .under-hero{display:flex;flex-wrap:wrap;justify-content:space-between;gap:15px 32px;padding-block:23px;color:var(--muted);font-size:14px}
+    .under-hero strong{color:var(--soft);font-weight:600}
+    .section{padding-block:120px}
+    .intro{display:grid;grid-template-columns:.65fr 1fr;align-items:start;gap:80px;margin-bottom:43px}
+    .section h2{font-weight:660;letter-spacing:-.055em;line-height:1.07;font-size:clamp(42px,5.6vw,73px);margin:0}
+    .intro p{margin:5px 0 0;color:var(--dim);font-size:clamp(18px,1.7vw,21px);line-height:1.58;max-width:600px}
+    .tour{background:#22211f;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .tour-head{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:31px}
+    .tabs{display:flex;gap:7px;background:#33312e;padding:5px;border-radius:10px;max-width:100%}
+    .tab{border:0;padding:10px 17px;border-radius:7px;cursor:pointer;background:transparent;color:var(--dim);font-size:14px;font-weight:650;transition:background .25s,color .25s,transform .25s}
+    .tab:hover{color:var(--ink)}.tab[aria-selected=true]{background:var(--accent);color:#1c1916}.tab:active{transform:scale(.96)}
+    .gallery-frame{border:1px solid #685044;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px #0008;background:#131313;position:relative;isolation:isolate}
+    .gallery-frame img{display:block;width:100%;height:auto;object-fit:contain;animation:gallery-appear .5s cubic-bezier(.16,1,.3,1) both}
+    @keyframes gallery-appear{from{opacity:.35;transform:scale(1.016)}to{opacity:1;transform:scale(1)}}
+    .gallery-caption{display:flex;justify-content:space-between;gap:18px;margin-top:19px;color:var(--dim);font-size:14px}
+    .gallery-caption strong{font-weight:600;color:var(--ink)}
+    .facts h2{max-width:690px}
+    .feature-layout{margin-top:66px;display:grid;grid-template-columns:repeat(3,1fr);gap:50px}
+    .feature{border-top:2px solid var(--accent);padding-top:24px}
+    .feature h3{font-size:24px;letter-spacing:-.035em;font-weight:660;margin:0 0 9px}
+    .feature p{font-size:16px;color:var(--dim);line-height:1.68;margin:0}
+    .build{padding:76px 0;background:var(--soft);color:#2b2926}
+    .build-inner{display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:center}
+    .build h2{color:#2b2926;font-size:clamp(40px,5vw,65px);margin:0 0 19px}
+    .build p{color:#514942;font-size:17px;max-width:650px;line-height:1.63;margin:0}
+    .build .btn{justify-self:end;background:#2b2926;border-color:#2b2926;color:#faf9f5}.build .btn:hover{background:#4b3c35}
+    .footer{background:#171714;border-top:1px solid #ffffff14}
+    .footer-inner{padding-block:45px;display:flex;justify-content:space-between;gap:36px;align-items:center;flex-wrap:wrap}
+    .footer-brand img{width:167px;display:block}.footer-note{color:var(--muted);font-size:14px;margin:12px 0 0}
+    .footer-links{display:flex;gap:22px;align-items:center}.footer-links a{font-size:14px;text-decoration:none;color:var(--dim)}.footer-links a:hover{color:var(--accent)}
+    .js .enter{animation:rise-in .85s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--delay,0ms)}
+    @keyframes rise-in{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .js .reveal{transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .85s;opacity:0;transform:translateY(26px)}
+    .js .reveal.visible{opacity:1;transform:none}
+    @media(max-width:1020px){.container{width:min(100% - 72px,1280px)}.hero{grid-template-columns:1fr;padding-block:75px;gap:60px}.hero-info{max-width:700px}.hero-visual{width:min(100%,840px)}.intro{grid-template-columns:1fr;gap:20px}.intro p{max-width:800px}.feature-layout{gap:25px}.nav{gap:22px}}
+    @media(max-width:650px){.container{width:calc(100% - 38px)}.header-inner{min-height:72px}.header.scrolled .header-inner{min-height:66px}.logo img{width:157px}.nav{gap:17px}.nav a{font-size:13px}.nav a[href="#features"]{display:none}h1{font-size:clamp(61px,13.8vw,86px)}.hero{padding-block:69px 81px;gap:47px}.lede{font-size:18px}.actions{gap:22px}.window{border-radius:10px}.window-caption{font-size:12px;flex-wrap:wrap}.section{padding-block:79px}.tour-head{display:block}.tour-head h2{margin-bottom:22px}.tabs{width:max-content}.gallery-caption{flex-direction:column;gap:4px}.feature-layout{grid-template-columns:1fr;gap:31px;margin-top:42px}.feature{padding-top:19px}.build-inner{grid-template-columns:1fr;gap:29px}.build .btn{justify-self:start}.build{padding-block:65px}.footer-inner{align-items:flex-start}}
+    @media(max-width:390px){.nav a[href="#desktop"]{display:none}.overline{font-size:14px}.actions{align-items:stretch}.btn{min-width:0}.under-hero{font-size:13px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.js .enter,.js .reveal{opacity:1!important;transform:none!important}.hero-visual:hover .window{transform:none}}
+    .achilles-publisher{display:inline-flex;align-items:center;gap:7px;font-size:13px;text-decoration:none;opacity:.83;transition:opacity .25s ease}.achilles-publisher:hover{opacity:1}.achilles-publisher img{width:23px;height:23px;display:block}@media(max-width:650px){.achilles-publisher{display:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="header" id="top">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="Kiln home"><img src="assets/kiln-lockup.svg" width="1207" height="256" alt="Kiln GNU/Linux"></a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#desktop">Desktop</a><a href="#features">What's inside</a><a class="achilles-publisher" href="https://kiln.mandrusia.tech/" aria-label="Kiln GNU/Linux"><img src="assets/kiln-symbol.svg" alt="" width="24" height="24"> Kiln GNU/Linux</a><a class="nav-source" href="https://github.com/kilnorg/kiln-gnu-linux" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content">
+    <section class="container hero" aria-labelledby="heading">
+      <div class="hero-info">
+        <div class="overline enter" style="--delay:50ms"><span class="dot" aria-hidden="true"></span> An early look at Kiln GNU/Linux</div>
+        <h1 id="heading" class="enter" style="--delay:120ms">Made with <em>Glaze.</em></h1>
+        <p class="lede enter" style="--delay:230ms">A Debian 13-based GNU/Linux distro with its own desktop environment, Glaze. Built in Rust, designed to feel a little different, and still very much a work in progress.</p>
+        <div class="actions enter" style="--delay:320ms"><a class="btn" href="#desktop">See the desktop <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a><a class="text-link" href="https://github.com/kilnorg/kiln-gnu-linux" target="_blank" rel="noopener noreferrer">Browse the source ↗</a></div>
+      </div>
+      <div class="hero-visual enter" style="--delay:240ms">
+        <div class="window"><img src="assets/desktop.webp" alt="Kiln GNU/Linux running the Glaze desktop in QEMU, with terminal showing system information" width="1281" height="866" fetchpriority="high"></div>
+        <div class="window-caption"><span>Glaze desktop, running in QEMU</span><span>Screenshot from the early beta</span></div>
+      </div>
+    </section>
+    <hr class="faint-line"><div class="container under-hero"><span><strong>Base</strong> &nbsp; Debian 13</span><span><strong>Desktop</strong> &nbsp; Glaze (Rust)</span><span><strong>Stage</strong> &nbsp; Early beta</span></div>
+    <section class="tour section" id="desktop" aria-labelledby="desktop-title">
+      <div class="container">
+        <div class="intro reveal"><h2 id="desktop-title">Meet the desktop.</h2><p>Glaze is Kiln's own desktop environment. A taskbar, an application launcher, settings, and familiar tools all sit together in one interface. This is what the current QEMU build looks like.</p></div>
+        <div class="tour-head reveal"><span style="color:var(--dim);font-size:15px">A closer look</span><div class="tabs" role="tablist" aria-label="Desktop screenshots"><button type="button" class="tab" role="tab" id="tab-apps" aria-controls="shot-apps" aria-selected="true">Application launcher</button><button type="button" class="tab" role="tab" id="tab-terminal" aria-controls="shot-terminal" aria-selected="false" tabindex="-1">Terminal & desktop</button></div></div>
+        <div class="gallery-frame reveal">
+          <div role="tabpanel" id="shot-apps" aria-labelledby="tab-apps"><img src="assets/applications.webp" width="1280" height="865" loading="lazy" alt="Kiln Glaze application launcher showing a search list, pinned app tiles, and system utilities"></div>
+          <div role="tabpanel" id="shot-terminal" aria-labelledby="tab-terminal" hidden><img src="assets/desktop.webp" width="1281" height="866" loading="lazy" alt="Glaze desktop with a terminal displaying Kiln Linux system details"></div>
+        </div>
+        <div class="gallery-caption reveal"><strong>Real screenshots, no mockups.</strong><span>Captured in QEMU on aarch64.</span></div>
+      </div>
+    </section>
+    <section class="container section facts" id="features" aria-labelledby="inside-title">
+      <h2 class="reveal" id="inside-title">What's inside Kiln.</h2>
+      <div class="feature-layout">
+        <article class="feature reveal"><h3>Debian underneath</h3><p>Kiln builds on Debian 13. The repository includes scripts and a live-build recipe for assembling an x86_64 ISO.</p></article>
+        <article class="feature reveal"><h3>Glaze on top</h3><p>A Rust-based desktop environment with a compositor, panel, settings, and session components.</p></article>
+        <article class="feature reveal"><h3>Everyday tools</h3><p>Themed desktop apps include Files, Terminal, Text, Calculator, Monitor, Viewer, and Kiln Store.</p></article>
+      </div>
+    </section>
+    <section class="build" id="build"><div class="container build-inner"><div><h2>It's still in beta.</h2><p>Kiln is a hobby project in active development. The aarch64 build has been tested in QEMU; the x86_64 build hasn't been verified on real hardware yet. If you want to try it, start with the build instructions.</p></div><a class="btn" href="https://github.com/kilnorg/kiln-gnu-linux/blob/beta/build/README.md" target="_blank" rel="noopener noreferrer">Read build instructions <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><div class="footer-brand"><img src="assets/kiln-lockup.svg" width="1207" height="256" alt="Kiln GNU/Linux"><p class="footer-note"><a href="https://kiln.mandrusia.tech/">A Kiln GNU/Linux open-source project.</a></p></div><div class="footer-links"><a href="https://github.com/kilnorg/kiln-gnu-linux" target="_blank" rel="noopener noreferrer">Source code ↗</a><a href="https://github.com/kilnorg" target="_blank" rel="noopener noreferrer">Achilles ↗</a><a href="#top">Back to top ↑</a></div></div></footer>
+  <script>
+    (()=>{
+      const header=document.querySelector('.header');
+      const updateHeader=()=>header.classList.toggle('scrolled',window.scrollY>18);
+      addEventListener('scroll',updateHeader,{passive:true});updateHeader();
+      const tabs=[...document.querySelectorAll('[role="tab"]')];
+      const selectTab=(tab,focus=false)=>{
+        tabs.forEach(t=>{
+          const isCurrent=t===tab;t.setAttribute('aria-selected',String(isCurrent));t.tabIndex=isCurrent?0:-1;
+          document.getElementById(t.getAttribute('aria-controls')).hidden=!isCurrent;
+        });
+        if(focus)tab.focus();
+      };
+      tabs.forEach((tab,i)=>{
+        tab.addEventListener('click',()=>selectTab(tab));
+        tab.addEventListener('keydown',e=>{
+          if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+          e.preventDefault();
+          const idx=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+          selectTab(tabs[idx],true);
+        });
+      });
+      const els=[...document.querySelectorAll('.reveal')];
+      if('IntersectionObserver'in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+        const observer=new IntersectionObserver(entries=>{
+          entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+        },{threshold:.12,rootMargin:'0px 0px -20px 0px'});
+        els.forEach(el=>observer.observe(el));
+        const catchUp=()=>els.forEach(el=>{if(el.getBoundingClientRect().top<innerHeight*.96)el.classList.add('visible')});
+        addEventListener('scroll',catchUp,{passive:true});addEventListener('pageshow',catchUp);catchUp();
+      }else els.forEach(el=>el.classList.add('visible'));
+    })();
+  </script>
+</body>
+</html>
